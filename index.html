@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vasilis Tsonis</title>
+  <meta name="description" content="Dynamics 365 and Power Platform engineer in Athens. Dataverse, C# plugins, Power Apps Code Apps, Power Automate, SharePoint, and products shipped end to end." />
+  <meta property="og:title" content="Vasilis Tsonis — Dynamics 365 & Power Platform engineer" />
+  <meta property="og:description" content="A scrollable flight through the systems I build." />
+  <meta name="theme-color" content="#070a12" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23070a12'/%3E%3Cpath d='M9 11l7 11 7-11' fill='none' stroke='%236fb7ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <a class="skip" href="#copy-contact">Skip to contact</a>
+
+  <!-- The 3D world: fixed behind everything. -->
+  <div id="world" aria-hidden="true">
+    <canvas id="gl"></canvas>
+    <div id="labels"></div>
+  </div>
+
+  <!-- Scroll track: gives the page its height. Filled by main.js from the sections data. -->
+  <div id="track"></div>
+
+  <!-- Fixed chrome -->
+  <header class="top">
+    <a class="brand" href="#start" data-go="hero">VT</a>
+    <nav class="rail" aria-label="Sections"><!-- built by main.js --></nav>
+    <a class="top-cta" href="#copy-contact" data-go="contact">Contact</a>
+  </header>
+
+  <!-- Pinned copy per section, cross-faded by scroll -->
+  <main id="copy" aria-live="polite"><!-- built by main.js --></main>
+
+  <!-- Hint on first load -->
+  <div class="hint" id="hint"><span class="hint-wheel"></span>Scroll to fly</div>
+
+  <!-- Detail drawer for projects -->
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+    <button class="drawer-close" id="drawer-close" aria-label="Close">×</button>
+    <p class="drawer-kicker" id="drawer-kicker"></p>
+    <h2 id="drawer-title"></h2>
+    <p class="drawer-short" id="drawer-short"></p>
+    <ul class="drawer-detail" id="drawer-detail"></ul>
+    <ul class="drawer-stack" id="drawer-stack"></ul>
+    <p class="drawer-links" id="drawer-links"></p>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <noscript>
+    <div class="noscript">
+      <h1>Vasilis Tsonis</h1>
+      <p>Dynamics 365 and Power Platform engineer in Athens. This page is an interactive 3D world and needs JavaScript. Email: vasilis.tsonis2001@gmail.com</p>
+    </div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
