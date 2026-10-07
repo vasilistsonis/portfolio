@@ -2,7 +2,7 @@
 
 export const profile = {
   name: 'Vasilis Tsonis',
-  role: 'Dynamics 365 & Power Platform engineer',
+  role: 'Solutions engineer · Dynamics 365, Azure & web',
   location: 'Athens, Greece',
   employer: 'Telekom (Deutsche Telekom Group)',
   email: 'vasilis.tsonis2001@gmail.com',
@@ -10,7 +10,7 @@ export const profile = {
   github: 'https://github.com/vasilistsonis',
   cv: 'assets/Vasilis-Tsonis-CV.pdf', // drop your CV at this path
   intro:
-    'I build the systems companies actually run on: Dataverse data models, C# plugins, model-driven and canvas apps, Power Apps Code Apps, Power Automate flows and SharePoint integrations. Outside of client work I ship my own products end to end.',
+    'I build the systems companies actually run on: Dynamics 365 and Dataverse back ends, C# plugins and Azure Functions, React and Power Apps front ends, and the APIs, databases and automation between them. Outside of client work I ship my own products end to end.',
 };
 
 // Skills grouped the way the platform is layered. Each one lists the project ids it shows up in,
