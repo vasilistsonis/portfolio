@@ -138,7 +138,8 @@ export const engagements = [
   },
 ];
 
-// Products and side ventures.
+// Products and side ventures. `shape` picks the 3D icon: ball, bars, dumbbell, wave, tee, kettlebell,
+// engine or tag. `featured: true` puts the venture on the centre island instead of the ring.
 export const ventures = [
   {
     id: 'hoops',
@@ -164,7 +165,8 @@ export const ventures = [
     ],
     links: [],
     stack: ['Azure Container Apps', 'Azure Static Web Apps', 'React', 'Claude API'],
-    shape: 'bars',
+    shape: 'engine',
+    featured: true, // sits on the centre island of the products scene
   },
   {
     id: 'coach',
@@ -194,7 +196,7 @@ export const ventures = [
     detail: ['Custom PHP with skeleton loaders and staggered reveals; pre-launch caching audit of the shop page.'],
     links: [{ label: 'kartelfam.com', url: 'https://kartelfam.com' }],
     stack: ['WordPress', 'WooCommerce', 'PHP'],
-    shape: 'tag',
+    shape: 'tee',
   },
   {
     id: 'voreva',
@@ -204,7 +206,7 @@ export const ventures = [
     detail: [],
     links: [],
     stack: ['WordPress', 'WooCommerce'],
-    shape: 'tag',
+    shape: 'tee',
   },
   {
     id: 'stargym',
@@ -214,7 +216,7 @@ export const ventures = [
     detail: [],
     links: [{ label: 'stargymathens.gr', url: 'https://stargymathens.gr' }],
     stack: ['Next.js', 'Vercel', 'Supabase'],
-    shape: 'tag',
+    shape: 'kettlebell',
   },
   {
     id: 'aphrodite',

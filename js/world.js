@@ -177,13 +177,18 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
   S.ventures = new THREE.Vector3(30, 4, -122);
   {
     const g = new THREE.Group(); g.position.copy(S.ventures); scene.add(g);
-    const n = ventures.length;
-    ventures.forEach((v, i) => {
+    const matTee = new THREE.MeshStandardMaterial({ color: 0x141c30, emissive: MAGENTA, emissiveIntensity: 0.8, roughness: 0.4, metalness: 0.3 });
+    // Featured ventures sit on the centre island, the rest around the ring.
+    const ring = ventures.filter((v) => !v.featured), centre = ventures.filter((v) => v.featured);
+    const n = ring.length;
+    const CENTRE_BASE = new THREE.Vector3(0, -1.5, 0);
+    ventures.forEach((v) => {
+      const i = ring.indexOf(v);
       const a = (i / n) * Math.PI * 2;
       const r = 9 + (i % 2) * 3;
-      const p = new THREE.Vector3(Math.cos(a) * r, Math.sin(a * 2) * 2.2, Math.sin(a) * r * 0.6);
+      const p = v.featured ? CENTRE_BASE.clone() : new THREE.Vector3(Math.cos(a) * r, Math.sin(a * 2) * 2.2, Math.sin(a) * r * 0.6);
       const isl = new THREE.Group(); isl.position.copy(p);
-      const base = hex(1.3, 0.3); isl.add(base);
+      const base = hex(v.featured ? 2.2 : 1.3, v.featured ? 0.4 : 0.3); isl.add(base);
       let obj;
       switch (v.shape) {
         case 'ball': {
@@ -212,6 +217,45 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
             b.position.set((k - 4) * 0.25, hh / 2, 0); obj.add(b);
           } break;
         }
+        case 'tee': {
+          // T-shirt outline, extruded. Clothing stores.
+          const s = new THREE.Shape();
+          s.moveTo(-0.72, 0.5); s.lineTo(-0.22, 0.64); s.quadraticCurveTo(0, 0.42, 0.22, 0.64); s.lineTo(0.72, 0.5);
+          s.lineTo(0.92, 0.12); s.lineTo(0.5, -0.02); s.lineTo(0.5, -0.64); s.lineTo(-0.5, -0.64); s.lineTo(-0.5, -0.02); s.lineTo(-0.92, 0.12); s.closePath();
+          obj = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: 0.14, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 2 }), matTee);
+          obj.add(new THREE.LineSegments(new THREE.EdgesGeometry(obj.geometry, 30), new THREE.LineBasicMaterial({ color: 0xff9ad6, transparent: true, opacity: 0.6 })));
+          obj.position.y = 1.0; break;
+        }
+        case 'kettlebell': {
+          // Gym.
+          obj = new THREE.Group();
+          const bell = new THREE.Mesh(new THREE.SphereGeometry(0.55, 24, 24), new THREE.MeshStandardMaterial({ color: 0x1c2438, emissive: AMBER, emissiveIntensity: 0.45, roughness: 0.35, metalness: 0.6 }));
+          bell.position.y = 0.55; obj.add(bell);
+          const handle = new THREE.Mesh(new THREE.TorusGeometry(0.36, 0.08, 10, 28, Math.PI), matGlowAmb);
+          handle.position.y = 0.98; obj.add(handle);
+          const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.34, 0.1, 20), matGlowAmb);
+          foot.position.y = 0.05; obj.add(foot);
+          obj.position.y = 0.15; break;
+        }
+        case 'engine': {
+          // The featured piece: a glowing core inside orbit rings, ringed by a radial bar chart.
+          obj = new THREE.Group();
+          const core = glow(new THREE.Mesh(new THREE.IcosahedronGeometry(0.85, 1), new THREE.MeshStandardMaterial({ color: 0x0f1524, emissive: MAGENTA, emissiveIntensity: 1, roughness: 0.2, metalness: 0.6 })));
+          core.position.y = 1.7; obj.add(core); spinners.push({ o: core, rx: 0.15, ry: 0.35 });
+          obj.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.25, 0)), new THREE.LineBasicMaterial({ color: MAGENTA, transparent: true, opacity: 0.5 }))).position.y = 1.7;
+          [1.75, 2.15].forEach((rr, k) => {
+            const ringMesh = new THREE.Mesh(new THREE.TorusGeometry(rr, 0.02, 6, 100), new THREE.MeshBasicMaterial({ color: k ? BLUE : MAGENTA, transparent: true, opacity: 0.5 }));
+            ringMesh.position.y = 1.7; ringMesh.rotation.set(Math.PI / 2 + 0.5 - k * 0.9, k * 0.6, 0);
+            obj.add(ringMesh); spinners.push({ o: ringMesh, rz: 0.15 + k * 0.1 });
+          });
+          const bars = 14;
+          for (let k = 0; k < bars; k++) {
+            const aa = (k / bars) * Math.PI * 2, hh = 0.35 + (0.5 + 0.5 * Math.sin(k * 1.9)) * 1.3, top = k === 9;
+            const bar = new THREE.Mesh(new THREE.BoxGeometry(0.22, hh, 0.22), new THREE.MeshStandardMaterial({ color: 0x141c30, emissive: top ? MAGENTA : BLUE_DEEP, emissiveIntensity: 0.9 }));
+            bar.position.set(Math.cos(aa) * 1.55, hh / 2, Math.sin(aa) * 1.55); bar.rotation.y = -aa; obj.add(bar);
+          }
+          obj.position.y = 0.2; break;
+        }
         default: {
           obj = new THREE.Mesh(new THREE.TorusKnotGeometry(0.5, 0.16, 80, 10), new THREE.MeshStandardMaterial({ color: 0x141c30, emissive: MAGENTA, emissiveIntensity: 0.7, roughness: 0.3, metalness: 0.5 }));
           obj.position.y = 0.9;
@@ -219,19 +263,22 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
       }
       if (v.shape === 'ball') obj.position.y = 1.1;
       if (v.shape === 'bars' || v.shape === 'wave') obj.position.y = 0.15;
-      isl.add(obj); spinners.push({ o: obj, rx: 0, ry: 0.4 });
+      isl.add(obj); spinners.push({ o: obj, rx: 0, ry: v.featured ? 0.12 : 0.4 });
       const { o: l, el } = label(v.title, 'magenta');
-      l.position.set(0, 2.6, 0); isl.add(l);
+      l.position.set(0, v.featured ? 4.6 : 2.6, 0); isl.add(l);
       g.add(isl);
       const entry = register(isl, v, 'venture', el);
       el.addEventListener('click', () => onSelect?.(entry));
       el.addEventListener('pointerenter', () => onHover?.(entry, true));
       el.addEventListener('pointerleave', () => onHover?.(entry, false));
+      if (v.featured) return;
       if (!reduceMotion) pulse(S.ventures, p.clone().add(S.ventures), matGlowMag, 0.18 + Math.random() * 0.15);
-      g.add(edge(new THREE.Vector3(0, -1.5, 0), p, matLineDim));
+      g.add(edge(CENTRE_BASE, p, matLineDim));
     });
-    const hub = glow(new THREE.Mesh(new THREE.OctahedronGeometry(0.9, 0), new THREE.MeshStandardMaterial({ color: 0x0f1524, emissive: MAGENTA, emissiveIntensity: 0.9 })));
-    hub.position.y = -1.5; g.add(hub); spinners.push({ o: hub, rx: 0.2, ry: 0.3 });
+    if (!centre.length) { // no featured venture: keep a plain hub in the middle
+      const hub = glow(new THREE.Mesh(new THREE.OctahedronGeometry(0.9, 0), new THREE.MeshStandardMaterial({ color: 0x0f1524, emissive: MAGENTA, emissiveIntensity: 0.9 })));
+      hub.position.copy(CENTRE_BASE); g.add(hub); spinners.push({ o: hub, rx: 0.2, ry: 0.3 });
+    }
   }
 
   // ---------- Scene 4: code — repo panels in a wall ----------
