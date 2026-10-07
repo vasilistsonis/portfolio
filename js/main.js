@@ -158,7 +158,7 @@ function injectPreloaderStyles() {
   .pre{position:fixed;inset:0;z-index:100;background:#070a12;display:grid;place-items:center;transition:opacity 500ms cubic-bezier(.23,1,.32,1),visibility 0s linear 500ms}
   .pre.is-done{opacity:0;visibility:hidden}
   .pre-inner{text-align:center}
-  .pre-name{font-family:'Syne',system-ui,sans-serif;font-weight:800;font-size:clamp(28px,5vw,48px);letter-spacing:-.03em;color:#e8ecf5}
+  .pre-name{font-family:'Archivo',system-ui,sans-serif;font-stretch:80%;font-weight:800;font-size:clamp(30px,5.4vw,54px);letter-spacing:0;color:#e8ecf5}
   .pre-line{width:min(260px,60vw);height:2px;background:rgba(232,236,245,.12);margin:16px auto 10px;border-radius:2px;overflow:hidden}
   .pre-line span{display:block;height:100%;background:#6fb7ff;transform:scaleX(0);transform-origin:left;animation:preload 900ms cubic-bezier(.23,1,.32,1) forwards}
   .pre-status{font-size:13px;color:#8b94a8}
