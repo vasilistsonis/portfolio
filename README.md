@@ -5,18 +5,15 @@ A scroll-driven 3D portfolio. Scrolling flies one continuous camera through seve
 ## Edit the content
 Everything lives in `js/data.js`: profile, skills, engagements, ventures, repos, credentials and the section copy. The world rebuilds from it.
 
-Before publishing:
-- Replace the `PL-000` placeholders in `credentials.certifications` with your real certification titles.
-- Confirm `profile.linkedin`.
-- Drop your CV at `assets/Vasilis-Tsonis-CV.pdf` (or change `profile.cv`).
+The CV behind the Download CV buttons is `assets/Vasilis-Tsonis-CV.pdf` (or change `profile.cv`).
 
 ## Run locally
 Any static server works, e.g. `npx serve .` or `python3 -m http.server 8080`, then open the printed URL. (Opening `index.html` directly from disk won't work because the page uses ES modules.)
 
 ## Deploy
-**GitHub Pages (included):** push this folder to a repo's `main` branch, then in Settings → Pages set Source to "GitHub Actions". The workflow in `.github/workflows/pages.yml` publishes on every push. Your URL will be `https://<user>.github.io/<repo>/`.
+**Vercel (live):** https://portfolio-zeta-ten-65.vercel.app. Deploy from this folder with `npx vercel deploy --prod`, or connect the GitHub repo in the Vercel dashboard (framework "Other", no build command, output directory `.`) so every push to `main` deploys.
 
-**Vercel / Netlify:** import the repo, framework "Other", no build command, output directory `.`.
+**Netlify / GitHub Pages:** any static host works; no build step.
 
 **Custom domain:** add it in the host's settings and point a CNAME at it; some corporate web filters block `*.github.io`, `*.vercel.app` and `*.azurestaticapps.net`, so a domain of your own is the safest link for a CV.
 
