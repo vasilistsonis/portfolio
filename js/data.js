@@ -267,7 +267,7 @@ export const credentials = {
 export const sections = [
   { id: 'hero', label: 'Start', title: profile.name, body: profile.role, scroll: 1.2, linger: 0.5 },
   { id: 'platform', label: 'Platform', title: 'The stack I work in every day', body: 'Dataverse at the centre; everything else connects to it. Hover a skill to see where it was used.', scroll: 1.5, linger: 0.5 },
-  { id: 'work', label: 'Client work', title: 'Eight engagements, seven sectors', body: 'Built as an external engineer for enterprise clients. Click a station for the case.', scroll: 1.8, linger: 0.55 },
+  { id: 'work', label: 'Client work', title: 'Eight engagements, eight sectors', body: 'Built as an external engineer for enterprise clients. Click a station for the case.', scroll: 1.8, linger: 0.55 },
   { id: 'ventures', label: 'Products', title: 'Things I shipped on my own', body: 'Apps, stores and AI tools, from idea to deployment.', scroll: 1.6, linger: 0.5 },
   { id: 'code', label: 'Open source', title: 'Code you can read', body: 'Public repositories, plus the private libraries I keep for continuity.', scroll: 1.3, linger: 0.45 },
   { id: 'credentials', label: 'Credentials', title: 'Certified on the platform', body: 'Three Microsoft certifications, three Applied Skills credentials and a degree in Applied Informatics.', scroll: 1.1, linger: 0.4 },

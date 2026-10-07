@@ -49,6 +49,12 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
     if (cls.includes('quiet')) quietLabels.push({ o, el });
     return { o, el };
   }
+  // Clickable labels are real buttons for keyboard and assistive tech; quiet labels are left alone.
+  function activate(el, entry) {
+    el.setAttribute('role', 'button'); el.tabIndex = 0;
+    el.addEventListener('click', () => onSelect?.(entry));
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect?.(entry); } });
+  }
   function edge(a, b, mat = matLineDim) {
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
     return new THREE.Line(g, mat);
@@ -162,7 +168,7 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
       l.position.set(0, 1.6 + h, 0); tower.add(l);
       g.add(tower);
       const entry = register(tower, e, 'engagement', el);
-      el.addEventListener('click', () => onSelect?.(entry));
+      activate(el, entry);
       el.addEventListener('pointerenter', () => onHover?.(entry, true));
       el.addEventListener('pointerleave', () => onHover?.(entry, false));
       if (prev.length) g.add(edge(prev[prev.length - 1], p, matLineDim));
@@ -268,7 +274,7 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
       l.position.set(0, v.featured ? 4.6 : 2.6, 0); isl.add(l);
       g.add(isl);
       const entry = register(isl, v, 'venture', el);
-      el.addEventListener('click', () => onSelect?.(entry));
+      activate(el, entry);
       el.addEventListener('pointerenter', () => onHover?.(entry, true));
       el.addEventListener('pointerleave', () => onHover?.(entry, false));
       if (v.featured) return;
@@ -305,7 +311,7 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
       g.add(panel);
       const entry = register(panel, r, r.pub ? 'repo' : 'private', el);
       if (r.pub) {
-        el.addEventListener('click', () => onSelect?.(entry));
+        activate(el, entry);
         el.addEventListener('pointerenter', () => onHover?.(entry, true));
         el.addEventListener('pointerleave', () => onHover?.(entry, false));
       }
@@ -314,13 +320,15 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
 
   // ---------- Scene 5: credentials — a ring of medals ----------
   S.creds = new THREE.Vector3(8, 6, -196);
+  // The ring grows with the number of credentials; the camera backs off by the same factor to keep it in frame.
+  const credItems = [...credentials.certifications.map((c) => ({ ...c, kind: 'cert' })), ...credentials.education.map((e) => ({ ...e, kind: 'edu' }))];
+  const credR = Math.max(5.5, credItems.length * 1.35), credK = credR / 5.5;
   {
     const g = new THREE.Group(); g.position.copy(S.creds); scene.add(g);
-    const items = [...credentials.certifications.map((c) => ({ ...c, kind: 'cert' })), ...credentials.education.map((e) => ({ ...e, kind: 'edu' }))];
-    const n = items.length;
+    const items = credItems, n = items.length;
     items.forEach((c, i) => {
       const a = (i / n) * Math.PI * 2 + Math.PI / 2;
-      const p = new THREE.Vector3(Math.cos(a) * 5.5, Math.sin(a) * 2.2, 0);
+      const p = new THREE.Vector3(Math.cos(a) * credR, Math.sin(a) * credR * 0.4, 0);
       const medal = new THREE.Group(); medal.position.copy(p);
       const disc = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 0.16, 6), new THREE.MeshStandardMaterial({ color: 0x141c30, emissive: c.kind === 'edu' ? AMBER : BLUE_DEEP, emissiveIntensity: 0.8, metalness: 0.7, roughness: 0.3 }));
       disc.rotation.x = Math.PI / 2; medal.add(disc);
@@ -358,8 +366,8 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
     { pos: new THREE.Vector3(30, 7, -106), look: S.ventures },
     { pos: new THREE.Vector3(-8, 2, -140), look: S.code },
     { pos: new THREE.Vector3(-26, 1, -148), look: S.code },
-    { pos: new THREE.Vector3(-4, 6, -180), look: S.creds },
-    { pos: new THREE.Vector3(8, 6, -179), look: S.creds },
+    { pos: new THREE.Vector3(-4, 6, S.creds.z + 16 * credK), look: S.creds },
+    { pos: new THREE.Vector3(8, 6, S.creds.z + 17 * credK), look: S.creds },
     { pos: new THREE.Vector3(0, 1, -222), look: S.contact },
     { pos: new THREE.Vector3(0, 0, -227), look: new THREE.Vector3(0, 0, -250) },
   ];
@@ -463,8 +471,10 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
     }
     // Narrow screens: push the camera back and aim lower so the scene sits above the copy.
     if (state.w < 700) {
+      // The wider credentials ring needs more room in portrait, fading in as the camera nears it.
+      const near = Math.max(0, 1 - camLook.distanceTo(S.creds) / 40);
       dir.subVectors(camPos, camLook).normalize();
-      camPos.addScaledVector(dir, 9);
+      camPos.addScaledVector(dir, 9 + 20 * near * (credK - 1));
       camLook.y -= 3.2;
     }
     camera.position.copy(camPos);
