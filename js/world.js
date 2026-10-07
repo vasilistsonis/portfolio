@@ -158,7 +158,7 @@ export function createWorld({ canvas, labelRoot, onSelect, onHover }) {
       beacon.position.y = 0.9 + h / 2; tower.add(beacon);
       const cap = glow(new THREE.Mesh(new THREE.OctahedronGeometry(0.32), matGlowBlue));
       cap.position.y = 1.1 + h; tower.add(cap); spinners.push({ o: cap, rx: 0, ry: 0.6 });
-      const { o: l, el } = label(e.sector);
+      const { o: l, el } = label(e.label ?? e.sector, e.accent ? `${e.accent} tint` : '');
       l.position.set(0, 1.6 + h, 0); tower.add(l);
       g.add(tower);
       const entry = register(tower, e, 'engagement', el);

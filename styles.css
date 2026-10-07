@@ -66,6 +66,8 @@ button { font: inherit; color: inherit; }
 .node-label.is-dim { opacity: 0.25; }
 .node-label.is-hot { border-color: var(--blue); background: rgba(43, 111, 214, 0.35); }
 .node-label.is-hot.magenta { border-color: var(--magenta); background: rgba(227, 79, 166, 0.3); }
+.node-label.magenta.tint { color: var(--magenta); border-color: rgba(227, 79, 166, 0.55); }
+.node-label.magenta.tint.is-hot { color: var(--ink); }
 .node-label.quiet { cursor: default; font-weight: 500; color: var(--ink-2); }
 .node-label.small { font-size: 11px; padding: 3px 7px; }
 .node-label:active { transform: scale(0.97); }

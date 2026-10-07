@@ -6,7 +6,7 @@ export const profile = {
   location: 'Athens, Greece',
   employer: 'Telekom (Deutsche Telekom Group)',
   email: 'vasilis.tsonis2001@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/vasilis-tsonis', // TODO: confirm your LinkedIn slug
+  linkedin: 'https://www.linkedin.com/in/vasileios-tsonis-2a60191b9/',
   github: 'https://github.com/vasilistsonis',
   cv: 'assets/Vasilis-Tsonis-CV.pdf', // drop your CV at this path
   intro:
@@ -33,10 +33,12 @@ export const skills = [
 ];
 
 // Client engagements. Clients are described by sector, not named.
+// `label` is what the station in the 3D world shows: what the product does. `accent: 'magenta'` tints it.
 export const engagements = [
   {
     id: 'qms',
     sector: 'Healthcare',
+    label: 'Quality document control',
     title: 'Quality-management document control',
     short: 'Controlled documents, multi-step approvals and a library-per-type SharePoint design for a hospital group.',
     detail: [
@@ -50,6 +52,7 @@ export const engagements = [
   {
     id: 'approvals',
     sector: 'Aviation',
+    label: 'Expense & purchase approvals',
     title: 'Expense and purchase approvals in Dynamics 365',
     short: 'Travel-expense and purchase-requisition apps with plugin-driven approval logic for an international airport.',
     detail: [
@@ -62,6 +65,7 @@ export const engagements = [
   {
     id: 'postboard',
     sector: 'Packaging',
+    label: 'Team collaboration board',
     title: 'PostBoard: team board as a Power Apps Code App',
     short: 'Replaced an aging Canvas App with a React/TypeScript Code App over eight SharePoint lists.',
     detail: [
@@ -75,6 +79,7 @@ export const engagements = [
   {
     id: 'rollout',
     sector: 'Retail network',
+    label: 'Store rollout tracker',
     title: 'Site rollout manager for ~3,300 locations',
     short: 'A model-driven app in Dataverse to plan and track network upgrades store by store.',
     detail: [
@@ -85,6 +90,8 @@ export const engagements = [
   {
     id: 'assets',
     sector: 'Telecom',
+    label: 'IT asset management',
+    accent: 'magenta',
     title: 'IT asset management on Dataverse',
     short: 'Extended an asset-management solution and generated policy documents from related asset records.',
     detail: [
@@ -96,6 +103,7 @@ export const engagements = [
   {
     id: 'sdm',
     sector: 'EU programmes',
+    label: 'Contract & invoice tracking',
     title: 'Contract and invoicing database, normalised',
     short: 'Turned a macro-heavy Excel workbook of framework and specific contracts into a Dataverse app.',
     detail: [
@@ -107,6 +115,7 @@ export const engagements = [
   {
     id: 'takeover',
     sector: 'Hospitality',
+    label: 'Hotel takeover planner',
     title: 'Hotel takeover planner',
     short: 'A Planner-style app for a fixed 30-day takeover procedure, with a drag-to-reschedule Gantt.',
     detail: [
@@ -119,6 +128,7 @@ export const engagements = [
   {
     id: 'contract-alerts',
     sector: 'Public sector',
+    label: 'Delivery document alerts',
     title: 'Document alerts for a public-sector contract',
     short: 'Flows that watch delivery folders, match project codes and keep the tracking workbook current.',
     detail: [
@@ -236,12 +246,15 @@ export const privateRepos = [
   { id: 'travelbuddy', title: 'Travel Buddy', short: 'Expo app with AI itinerary generation and a multi-turn travel assistant.' },
 ];
 
-// Certifications and education. Replace the placeholders with your actual certification names.
+// Certifications, Applied Skills and education. `code` is the bold label (and the medal label in 3D).
 export const credentials = {
   certifications: [
-    { code: 'PL-000', title: 'Microsoft certification', note: 'Replace with the exact title' },
-    { code: 'PL-000', title: 'Microsoft certification', note: 'Replace with the exact title' },
-    { code: 'PL-000', title: 'Microsoft certification', note: 'Replace with the exact title' },
+    { code: 'DP-420', title: 'Azure Cosmos DB AI Developer Associate', note: 'Earned January 2025' },
+    { code: 'PL-900', title: 'Power Platform Fundamentals', note: 'Earned April 2025' },
+    { code: 'AZ-900', title: 'Azure Fundamentals', note: 'Earned November 2024' },
+    { code: 'Copilot Studio', title: 'Applied Skills: Create agents in Microsoft Copilot Studio', note: 'Earned July 2026' },
+    { code: 'Power Automate', title: 'Applied Skills: Create and manage automated processes', note: 'Earned September 2025' },
+    { code: 'Canvas apps', title: 'Applied Skills: Create and manage canvas apps with Power Apps', note: 'Earned July 2025' },
   ],
   education: [
     { title: 'BSc Applied Informatics', org: 'University of Macedonia', note: 'Thessaloniki' },
@@ -255,6 +268,6 @@ export const sections = [
   { id: 'work', label: 'Client work', title: 'Eight engagements, seven sectors', body: 'Built as an external engineer for enterprise clients. Click a station for the case.', scroll: 1.8, linger: 0.55 },
   { id: 'ventures', label: 'Products', title: 'Things I shipped on my own', body: 'Apps, stores and AI tools, from idea to deployment.', scroll: 1.6, linger: 0.5 },
   { id: 'code', label: 'Open source', title: 'Code you can read', body: 'Public repositories, plus the private libraries I keep for continuity.', scroll: 1.3, linger: 0.45 },
-  { id: 'credentials', label: 'Credentials', title: 'Certified on the platform', body: 'Microsoft certifications and a degree in Applied Informatics.', scroll: 1.1, linger: 0.4 },
+  { id: 'credentials', label: 'Credentials', title: 'Certified on the platform', body: 'Three Microsoft certifications, three Applied Skills credentials and a degree in Applied Informatics.', scroll: 1.1, linger: 0.4 },
   { id: 'contact', label: 'Contact', title: 'Let\'s build something', body: 'Open to Power Platform and Dynamics 365 projects, product work and consulting.', scroll: 1.2, linger: 0.5 },
 ];
